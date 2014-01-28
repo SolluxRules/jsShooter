@@ -1,0 +1,21 @@
+Ideas:
+Hülle lässt sich schwer reparieren: Verkäufer, Crew(?) oder seltenes PowerUp 
+-Energie:
+	-Energie wie "Mana" lädt sich mit bestimmter Geschwindigkeit auf ( oder nimmt ab wenn Output > Input ist)
+	-Schilde
+	-Antrieb
+	-"time warp"
+	-Spezielle Attacken
+	
+	
+	Drops:
+	common:
+	-scrap = money
+	-
+	
+	upgrades:
+	-weapon
+	-Shields
+	-Hull
+	-Speed
+	-
