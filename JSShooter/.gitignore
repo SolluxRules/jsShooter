@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 /*.class
 /bin
+=======
+/bin
+*.class
+>>>>>>> refs/remotes/origin/master
