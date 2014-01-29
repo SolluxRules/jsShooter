@@ -92,7 +92,30 @@ public class Player
 			long elapsed = (System.nanoTime() - firingTimer) / 1000000;
 			if(elapsed > firingDelay)
 			{
-				GamePanel.bullets.add(new Bullet(270,x,y, this.dx, this.dy));
+				switch(weaponLevel)
+				{
+				case 0:
+					GamePanel.bullets.add(new Bullet(270,x,y, this.dx, this.dy));
+					break;
+				case 1:
+				case 2:
+					GamePanel.bullets.add(new Bullet(270,x-r,y+r/2, this.dx, this.dy));
+					GamePanel.bullets.add(new Bullet(270,x+r,y+r/2, this.dx, this.dy));
+					break;
+				case 3:
+				case 4:
+					GamePanel.bullets.add(new Bullet(270,x,y, this.dx, this.dy));
+					GamePanel.bullets.add(new Bullet(272,x+r,y+r/2, this.dx, this.dy));
+					GamePanel.bullets.add(new Bullet(268,x-r,y+r/2, this.dx, this.dy));
+					break;
+				case 5:
+					GamePanel.bullets.add(new Bullet(270,x-r/2,y+r/4, this.dx, this.dy));
+					GamePanel.bullets.add(new Bullet(270,x+r/2,y+r/4, this.dx, this.dy));
+					GamePanel.bullets.add(new Bullet(269,x-r,y+r/2, this.dx, this.dy));
+					GamePanel.bullets.add(new Bullet(271,x+r,y+r/2, this.dx, this.dy));
+				}
+				
+				
 				firingTimer = System.nanoTime();
 			}
 		}
@@ -191,7 +214,12 @@ public class Player
 	
 	public void upgradeWeapon()
 	{
-		weaponLevel++;
+		if (weaponLevel < 5)
+		{
+			weaponLevel++;
+			if (weaponLevel % 2 == 0)
+				firingDelay = (firingDelay / 6) * 5;
+		}	
 	}
 	
 	public void upgradeShield()
@@ -256,5 +284,11 @@ public class Player
 	public int getMaxHull()
 	{
 		return maxHull;
+	}
+
+	
+	public int getWeaponLevel()
+	{
+		return weaponLevel;
 	}
 }

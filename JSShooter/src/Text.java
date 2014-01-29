@@ -21,6 +21,8 @@ public class Text
 	
 	public boolean update()
 	{
+		x = GamePanel.player.getX() + GamePanel.player.getR();
+		y = GamePanel.player.getY() - GamePanel.player.getR();
 		long elapsed = (System.nanoTime() - start)/1000000;
 		if(elapsed > time)
 		{
@@ -35,7 +37,10 @@ public class Text
 		
 		long elapsed = (System.nanoTime() - start)/1000000;
 		int alpha = (int) (255* Math.sin(Math.PI * elapsed/time));
-		if(alpha > 255) alpha = 255;
+		if(alpha > 255) 
+			alpha = 255;
+		if(alpha < 0)
+			alpha = 0;
 		
 		g.setColor(new Color(0, 0, 0, alpha));
 		g.drawString(s, (int)x, (int)y);

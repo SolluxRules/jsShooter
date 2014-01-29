@@ -13,7 +13,7 @@ public class PowerUp
 	public enum PowerUpType
 	{
 		REPAIR,
-		POWERUP,
+		WEAPONUP,
 		SHIELDUPGRADE;
 	}
 	
@@ -30,8 +30,7 @@ public class PowerUp
 		switch(pt)
 		{
 		case REPAIR: color1 = Color.gray; break;
-		case POWERUP: color1 = Color.red; break;
-		case SHIELDUPGRADE: color1 = Color.yellow; break;
+		case WEAPONUP: color1 = Color.red; break;
 		}
 		
 		this.type = pt;

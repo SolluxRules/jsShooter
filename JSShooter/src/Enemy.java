@@ -31,6 +31,8 @@ public class Enemy
 	private boolean ready;
 	private boolean dead;
 	
+	private boolean reallyDead;
+	
 	private boolean hit;
 	private long hitTimer;
 	
@@ -138,6 +140,7 @@ public class Enemy
 		
 		ready = false;
 		dead = false;
+		reallyDead = false;
 		
 		hit = false;
 		hitTimer = 0;
@@ -263,6 +266,8 @@ public class Enemy
 				GamePanel.enemies.add(e);
 			}
 		}
+		else
+			reallyDead = true;
 	}
 
 	
@@ -281,5 +286,11 @@ public class Enemy
 	{
 		this.dx = dx;
 		this.dy = dy;
+	}
+
+	
+	public boolean isReallyDead()
+	{
+		return reallyDead;
 	}
 }

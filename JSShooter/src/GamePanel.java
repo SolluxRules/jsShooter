@@ -16,6 +16,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	private boolean running;
 	private boolean help;
 	
+	private StatManager statMan;
+	
 	private BufferedImage  image;
 	private Graphics2D g;
 	
@@ -85,6 +87,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		waveNumber = 0;
 		
 		lowLifeTimer = 0;
+		
+		statMan = new StatManager();
 		
 		help = false;
 		credits = false;
@@ -632,10 +636,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 					
 					if (e.isDead())
 					{
+						e.explode();
 						killEnemy(j);
 						j--;
 						
-						e.explode();
+						
 					}
 					break;
 				}
@@ -698,16 +703,21 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 				if(pu.getType() == PowerUp.PowerUpType.REPAIR)
 				{
 					player.repair(1);
+					texts.add(new Text(player.getX() + 20, player.getY() - 20, 3000, "+Repair"));
 				} 
-				else if(pu.getType() == PowerUp.PowerUpType.POWERUP)
+				else if(pu.getType() == PowerUp.PowerUpType.WEAPONUP)
 				{
 					player.upgradeWeapon();
+					if(player.getWeaponLevel()%2 == 0)
+						texts.add(new Text(player.getX() + 20, player.getY() - 20, 3000, "+Weapon Speed"));
+					else
+						texts.add(new Text(player.getX() + 20, player.getY() - 20, 3000, "+Weapon"));
 				}
 				else if(pu.getType() == PowerUp.PowerUpType.SHIELDUPGRADE)
 				{
 					player.upgradeShield();
 				}
-				texts.add(new Text(player.getX() + 20, player.getY() - 20, 3000, "+Repair"));
+				
 				powerups.remove(i);
 				i--;
 			}
@@ -718,13 +728,24 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	{
 		Enemy e = enemies.get(ind);
 		// chance for power
-		double rand = Math.random();
-		if (rand < 0.05)
+		long elapsed = (System.nanoTime() - statMan.getLastPowerUpTime())/1000000;
+		
+		if (elapsed > 1000 && e.isReallyDead())
 		{
-			powerups.add(new PowerUp(
-					PowerUp.PowerUpType.REPAIR, e.getX(),
-					e.getY()));
+			double rand = Math.random();
+			if (rand < 0.02)
+			{
+				powerups.add(new PowerUp(PowerUp.PowerUpType.REPAIR, e.getX(),
+						e.getY()));
+				statMan.gottenPowerUp();
+			} else if (rand < 0.06)
+			{
+				powerups.add(new PowerUp(PowerUp.PowerUpType.WEAPONUP,
+						e.getX(), e.getY()));
+				statMan.gottenPowerUp();
+			}
 		}
+		
 		player.addScore(e.getRank() + e.getType());
 		
 		explosions.add(new Explosion(e.getX(), e.getY(), e.getR(), e.getR()*3));
