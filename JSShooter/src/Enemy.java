@@ -1,14 +1,4 @@
-/**
-  * <Beschreibung>
-  *
-  *
-  * @version 1.0 from 24 Jan 2014
-  * @author Joshua
-  */
-
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
+import java.awt.*;
 
 public class Enemy
 {
